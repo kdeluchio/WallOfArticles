@@ -1,0 +1,22 @@
+<form [formGroup]="newArticle" >
+    <h4>Create Your Article</h4>
+    <div class="form-group">
+        <label >Title:</label>
+        <input type="text" class="form-control" formControlName="title" 
+        [ngClass]="{ 'is-invalid': startPost && newArticle.controls.title.errors }">
+        <div *ngIf="newArticle.controls.title.errors" class="invalid-feedback">
+            Title is required!
+        </div>                
+    </div>   
+    <div class="form-group">
+        <label >Text:</label>
+        <textarea class="form-control" rows="5" formControlName="text" 
+        [ngClass]="{ 'is-invalid': startPost && newArticle.controls.text.errors }"></textarea>
+        <div *ngIf="newArticle.controls.text.errors" class="invalid-feedback">
+            Text is required!
+        </div>        
+    </div> 
+    <div class="form-group">
+        <button type="submit" class="btn btn-success" (click)="post()">Post</button>
+    </div>
+</form>

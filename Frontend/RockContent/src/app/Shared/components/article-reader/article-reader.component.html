@@ -1,0 +1,18 @@
+<div class="card mt5" *ngIf="article">
+    <div class="card-body">
+      <h5 class="card-title">{{ article?.title }}</h5>
+      <p class="card-text">{{ article?.text }}</p>
+      <div class="row">
+      <div class="col-sm-10 mt-2">      
+        <button type="button" class="btn btn-primary" (click)="liked()">
+          Like <span class="badge badge-light">{{ article?.likes }}</span>
+        </button>
+      </div>       
+      <div class="col-sm-2 mt-2">
+        <button type="button" class="btn btn-danger" (click)="delete()">
+          Remove
+        </button>     
+      </div> 
+      </div>
+    </div>
+</div>
