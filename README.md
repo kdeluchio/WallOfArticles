@@ -5,12 +5,15 @@
 # Back-end Techinical Specification 
 
 ### Environment 
-Visual Studio 2019, .Net Core 3, language C#, ORM Dapper, Mapper and DDD.
+Visual Studio 2019, .Net Core 3, language C#, ORM Entity Framework Core 3.1, MySQL Database, Mapper and DDD.
 
 ### Check these steps before instalation
-1 - In the WebApi project open appsetings.json and change database string connection configuration; </br>
+1 - In the WebApi project open appsetings.json file and change database string connection configuration; </br>
 2 - In my environment was configured port 44379 from localhost; </br>
-3 - Play.
+3 - Open terminal and select project folder called "RockContent.Infra.Data";
+4 - In the project "RockContent.Infra.Data" there is appsetings.json file, change database string connection configuration too;
+5 - In this folder execute the command "dotnet ef database update" to create database; 
+6 - Play.
 
 # Front-end Techinical Specification 
 
@@ -23,13 +26,3 @@ Visual Code, Angular 9 and NodeJs.
 3 - In the Visual Code terminal install agular cli; </br>  
 4 - Find environments.ts file, check if url property is correct. This is back-end url; </br> 
 5 - In the Visual Code terminal type the command ng serve --open .
-
-# Data Base Techinical Specification 
-
-### Environment 
-Visual Management Studio and SQL Server 2018.
-
-
-### Check these steps before instalation
-1 - Restore the database through the file RockContent.bak ; </br>
-2 - Execute all storage procedures in database.
