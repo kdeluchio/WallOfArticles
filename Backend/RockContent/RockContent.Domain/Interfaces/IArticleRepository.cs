@@ -6,12 +6,8 @@ using System.Text;
 
 namespace RockContent.Domain.Interfaces
 {
-    public interface IArticleRepository
+    public interface IArticleRepository : IBaseRepository<Article>
     {
-        public IQueryable<Article> GetAll();
-        public Article GetById(int id);
-        public void Create(Article article);
-        public void UpdateLike(int id);
-        public void Remove(int id);
+
     }
 }

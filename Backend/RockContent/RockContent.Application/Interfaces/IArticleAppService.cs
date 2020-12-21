@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RockContent.Application.Interfaces
 {
     public interface IArticleAppService
     {
-        public IEnumerable<ArticleViewModel> GetAll();
-        public ArticleViewModel GetById(int id);
-        public int Create(NewArticleViewModel articleViewModel);
-        public void Liked(int id);
-        public void Remove(int id);
+        Task<IEnumerable<ArticleViewModel>> GetAll();
+        Task<ArticleViewModel> GetById(Guid id);
+        Task<ArticleViewModel> Create(NewArticleViewModel articleViewModel);
+        Task<bool> Liked(Guid id);
+        Task<bool> Remove(Guid id);
     }
 }

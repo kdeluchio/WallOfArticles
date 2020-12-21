@@ -6,7 +6,7 @@ namespace RockContent.Application.ViewModel
 {
     public class ArticleViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

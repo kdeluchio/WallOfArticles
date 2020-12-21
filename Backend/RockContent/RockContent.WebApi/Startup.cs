@@ -1,24 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RockContent.Application.AutoMapper;
 using RockContent.Application.Interfaces;
 using RockContent.Application.Services;
 using RockContent.Domain.Interfaces;
-using RockContent.Domain.Validations;
+using RockContent.Infra.Data.Context;
 using RockContent.Infra.Data.Repository;
+using System.IO;
 
 namespace RockContent.WebApi
 {
@@ -39,6 +34,15 @@ namespace RockContent.WebApi
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IArticleAppService, ArticleAppService>();
             services.AddAutoMapper(typeof(Mapping));
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            services.AddDbContext<RockContentContext>(
+                options => options.UseMySql(configuration.GetConnectionString("DefaultConnection"))
+            );
 
             services.AddControllers();
             services.AddCors();

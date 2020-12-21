@@ -19,17 +19,13 @@ export class ArticleReaderComponent implements OnInit {
 
   liked(): void{
     this.service.Liked(this.article.id).subscribe(x =>{
-      if(x.success){
-        this.article.likes = Number(x.result);
-      }
+        this.article.likes = Number(x);
     });
   }
 
   delete(){
     this.service.Delete(this.article.id).subscribe(x =>{
-      if(x.success){
         this.deleted.emit();
-      }
     }); 
   }
 }

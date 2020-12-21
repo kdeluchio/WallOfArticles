@@ -1,8 +1,6 @@
 ﻿using RockContent.Domain.Interfaces;
 using RockContent.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RockContent.Domain.Validations
 {
@@ -19,7 +17,7 @@ namespace RockContent.Domain.Validations
         {
             ValidateModel();
 
-            if (_article.Id <=0)
+            if (_article.Id == Guid.Empty)
             {
                 throw new Exception("Id is required.");
             }

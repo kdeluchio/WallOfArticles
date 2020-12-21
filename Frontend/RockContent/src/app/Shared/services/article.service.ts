@@ -26,17 +26,17 @@ export class ArticleService {
     return this.http.get<IArticle[]>(`${environment.url}/Article/GetAll`);
   }  
   
-  Liked(id : number) : Observable<IResponse>{
+  Liked(id : string) : Observable<string>{
 
-    return this.http.put<IResponse>(`${environment.url}/Article/Liked/${id}`, {id}); 
+    return this.http.put<string>(`${environment.url}/Article/Liked/${id}`, {id}); 
   }
 
-  Delete(id : number) : Observable<IResponse>{
+  Delete(id : string) : Observable<void>{
 
     const params: {[param: string]: string} = {};
     params.id = id.toString();
       
-    return this.http.delete<IResponse>(`${environment.url}/Article/Remove/${id}`);
+    return this.http.delete<void>(`${environment.url}/Article/Remove/${id}`);
   }
 
   Create(article : INewArticle) : Observable<IResponse>{

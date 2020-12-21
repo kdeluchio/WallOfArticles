@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RockContent.Application.Interfaces;
 using RockContent.Application.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace RockContent.WebApi.Controllers
 {
-    [Route("Api/Article")]
-    //[EnableCors("AllowOrigin")]
+    [Route("Api/[controller]")]
     public class ArticleController : Controller
     {
         private readonly IArticleAppService _articleAppService;
@@ -22,73 +19,108 @@ namespace RockContent.WebApi.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _articleAppService.GetAll();
-            return Ok(result);
+            try
+            {
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                var result = await _articleAppService.GetAll();
+                return Ok(result);
+            }
+            catch(ArgumentException ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
 
         [HttpGet]
-        [Route("GetById/{id:int}")]
-        public IActionResult GetById(int id)
+        [Route("GetById/{id:Guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var result = _articleAppService.GetById(id);
-            if (result== null || result.Id == 0)
+            try
             {
-                return NotFound();
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                var result = await _articleAppService.GetById(id);
+                if (result == null || result?.Id == Guid.Empty )
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
             }
-
-            return Ok(result);
+            catch(ArgumentException ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+            }
         }
-
 
         [HttpPost]
         [Route("Create")]
-        public IActionResult Create([FromBody] NewArticleViewModel articleViewModel)
+        public async Task<IActionResult> Create([FromBody] NewArticleViewModel articleViewModel)
         {
             try
             {
-                var id = _articleAppService.Create(articleViewModel);
-                return Json(new { success = true, message = "Succefull", result = id.ToString() });
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                var result = await _articleAppService.Create(articleViewModel);
+                return Ok(result);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return Json(new { success = false, message = ex.Message, result = "0" });
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
-
 
         [HttpDelete]
-        [Route("Remove/{id:int}")]
-        public IActionResult Remove(int id)
+        [Route("Remove/{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                _articleAppService.Remove(id);
-                return Json(new { success = true, message = "Succefull"});
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                var result = await _articleAppService.Remove(id);
+                return Ok();
+
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return Json(new { success = false, message = ex.Message});
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
-
         [HttpPut]
-        [Route("Liked/{id:int}")]
-        public IActionResult Liked(int id)
+        [Route("Liked/{id:Guid}")]
+        public async Task<IActionResult> Liked(Guid id)
         {
             try
             {
-                 _articleAppService.Liked(id);
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
 
-                var result = _articleAppService.GetById(id);
-
-                return Json(new { success = true, message = "Succefull", result = result?.Likes.ToString() });
+                await _articleAppService.Liked(id);
+                var result = await _articleAppService.GetById(id);
+                return Ok(result?.Likes.ToString());
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return Json(new { success = false, message = ex.Message, result = "0" });
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

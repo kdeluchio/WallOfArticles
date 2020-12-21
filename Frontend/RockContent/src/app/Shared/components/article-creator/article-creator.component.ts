@@ -40,12 +40,12 @@ export class ArticleCreatorComponent implements OnInit {
     }
 
     this.service.Create(article).subscribe(x => {
-      if(x.success){
+
         this.startPost = false;
         this.newArticle.get("title").setValue("");
         this.newArticle.get("text").setValue("");
         this.posted.emit();
-      }
+
     });
 
   }
