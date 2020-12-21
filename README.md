@@ -10,10 +10,10 @@ Visual Studio 2019, .Net Core 3, language C#, ORM Entity Framework Core 3.1, MyS
 ### Check these steps before instalation
 1 - In the WebApi project open appsetings.json file and change database string connection configuration; </br>
 2 - In my environment was configured port 44379 from localhost; </br>
-3 - Open terminal and select project folder called "RockContent.Infra.Data";
-4 - In the project "RockContent.Infra.Data" there is appsetings.json file, change database string connection configuration too;
-5 - In this folder execute the command "dotnet ef database update" to create database; 
-6 - Play.
+3 - Open terminal and select project folder called "RockContent.Infra.Data";</br>
+4 - In the project "RockContent.Infra.Data" there is appsetings.json file, change database string connection configuration too;</br>
+5 - In this folder execute the command "dotnet ef database update" to create database;</br>
+6 - Play.</br>
 
 # Front-end Techinical Specification 
 
